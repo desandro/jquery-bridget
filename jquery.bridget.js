@@ -1,3 +1,7 @@
+/**
+ * Bridget makes jQuery widgets
+ */
+
 /*jshint browser: true, curly: true, devel: true, eqeqeq: true, forin: false, immed: false, newcap: true, noempty: true, strict: true, undef: true */
 /*global jQuery: false */
 
@@ -67,18 +71,20 @@ function bridgePlugin(namespace, PluginClass) {
 
 }
 
+// -------------------------- bridget -------------------------- //
+
 /**
  * @returns Function - the plugin class
  * @param {String} namespace
 **/
-var createPlugin = function(namespace) {
+function bridget( namespace ) {
   // create plugin constructor class
-  var className = toDash(namespace);
-  var PluginClass = function(element, options) {
-    this.element = $(element);
+  var className = toDash( namespace );
+  var PluginClass = function( element, options ) {
+    this.element = $( element );
     // set options,
-    this.options = $.extend(true, {}, this.constructor.defaults, options);
-    this.element.addClass(className);
+    this.options = $.extend( true, {}, this.constructor.defaults, options );
+    this.element.addClass( className );
     this._create();
     this._init();
   };
@@ -86,6 +92,9 @@ var createPlugin = function(namespace) {
   bridgePlugin(namespace, PluginClass);
 
   return PluginClass;
-};
+}
+
+// make available in jQuery namespace
+$.bridget = bridget;
 
 })( window, jQuery );
