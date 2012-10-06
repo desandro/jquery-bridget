@@ -2,8 +2,7 @@
  * Bridget makes jQuery widgets
  */
 
-/*jshint browser: true, curly: true, devel: true, eqeqeq: true, forin: false, immed: false, newcap: true, noempty: true, strict: true, undef: true */
-/*global jQuery: false */
+/*jshint browser: true, curly: true, devel: true, eqeqeq: true, forin: false, immed: false, jquery: true, newcap: true, noempty: true, strict: true, undef: true */
 
 ( function( window, $ ) {
 
@@ -16,7 +15,48 @@ function toDash(str) {
   }).toLowerCase();
 }
 
-// -------------------------- createPlugin -------------------------- //
+// -------------------------- bridget -------------------------- //
+
+/**
+ * @returns Function - the plugin class
+ * @param {String} namespace
+**/
+function bridget( namespace ) {
+  // create plugin constructor class
+  var className = toDash( namespace );
+  var PluginClass = function( element, options ) {
+    this.element = $( element );
+    // set options,
+    this.options = $.extend( true, {}, this.constructor.defaults, options );
+    this.element.addClass( className );
+    this._create();
+    this._init();
+  };
+
+  // inherit from Widget
+  PluginClass.prototype = new Widget();
+
+  bridgePlugin(namespace, PluginClass);
+
+  return PluginClass;
+}
+
+// make available in jQuery namespace
+$.bridget = bridget;
+
+// -------------------------- Widget -------------------------- //
+// base class that plugin will inherit from
+
+function Widget() {}
+
+Widget.prototype._create = function() {};
+
+Widget.prototype._init = function() {};
+
+// widgets that bridget makes
+bridget.Widget = Widget;
+
+// -------------------------- plugin bridge -------------------------- //
 
 // helper function for logging errors
 // $.error breaks jQuery chaining
@@ -70,31 +110,5 @@ function bridgePlugin(namespace, PluginClass) {
   };
 
 }
-
-// -------------------------- bridget -------------------------- //
-
-/**
- * @returns Function - the plugin class
- * @param {String} namespace
-**/
-function bridget( namespace ) {
-  // create plugin constructor class
-  var className = toDash( namespace );
-  var PluginClass = function( element, options ) {
-    this.element = $( element );
-    // set options,
-    this.options = $.extend( true, {}, this.constructor.defaults, options );
-    this.element.addClass( className );
-    this._create();
-    this._init();
-  };
-
-  bridgePlugin(namespace, PluginClass);
-
-  return PluginClass;
-}
-
-// make available in jQuery namespace
-$.bridget = bridget;
 
 })( window, jQuery );
