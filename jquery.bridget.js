@@ -36,7 +36,7 @@ function bridget( namespace ) {
   // inherit from Widget
   PluginClass.prototype = new Widget();
 
-  bridgePlugin(namespace, PluginClass);
+  bridge(namespace, PluginClass);
 
   return PluginClass;
 }
@@ -72,37 +72,38 @@ function logError( message ) {
  * @param {String} namespace - plugin name
  * @param {Function} PluginClass - constructor class
  */
-function bridgePlugin(namespace, PluginClass) {
+function bridge( namespace, PluginClass ) {
   // add to jQuery fn namespace
-  $.fn[namespace] = function(options) {
-    if (typeof options === 'string') {
+  $.fn[ namespace ] = function( options ) {
+    if ( typeof options === 'string' ) {
       // call plugin method when first argument is a string
       // get arguments for method
-      var args = Array.prototype.slice.call(arguments, 1);
-      this.each(function(){
-        var instance = $.data(this, namespace);
-        if (!instance) {
-          logError("cannot call methods on " + namespace + " prior to initialization; " +
-            "attempted to call method '" + options + "'");
+      var args = Array.prototype.slice.call( arguments, 1 );
+      this.each( function() {
+        var instance = $.data( this, namespace );
+        if ( !instance ) {
+          logError( "cannot call methods on " + namespace + " prior to initialization; " +
+            "attempted to call method '" + options + "'" );
           return;
         }
-        if (!$.isFunction(instance[options]) || options.charAt(0) === "_") {
-          logError("no such method '" + options + "' for " + namespace + " instance");
+        if ( !$.isFunction(instance[options]) || options.charAt(0) === "_" ) {
+          logError( "no such method '" + options + "' for " + namespace + " instance" );
           return;
         }
         // trigger method with arguments
-        instance[options].apply(instance, args);
+        instance[ options ].apply( instance, args );
       });
     } else {
-      this.each(function() {
-        var instance = $.data(this, namespace);
-        if (instance) {
+      this.each( function() {
+        var instance = $.data( this, namespace );
+        if ( instance ) {
           // apply options & init
-          instance.option(options || {});
+          instance.option( options || {} );
           instance._init();
         } else {
           // initialize new instance
-          $.data(this, namespace, new PluginClass(this, options) );
+          instance = new PluginClass( this, options );
+          $.data( this, namespace, instance );
         }
       });
     }
@@ -110,5 +111,8 @@ function bridgePlugin(namespace, PluginClass) {
   };
 
 }
+
+// expose in bridget's namespace
+bridget.bridge = bridge;
 
 })( window, jQuery );
