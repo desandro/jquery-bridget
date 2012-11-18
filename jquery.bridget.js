@@ -15,6 +15,11 @@ function toDash(str) {
   }).toLowerCase();
 }
 
+// helper function
+function capitalize( str ) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 // -------------------------- bridget -------------------------- //
 
 /**
@@ -52,6 +57,25 @@ function Widget() {}
 Widget.prototype._create = function() {};
 
 Widget.prototype._init = function() {};
+
+// option setter
+Widget.prototype.option = function( opts ) {
+
+  if ( !$.isPlainObject( opts ) ){
+    return;
+  }
+
+  this.options = $.extend( true, this.options, opts );
+
+  // trigger _setOptionName if it exists
+  for ( var optionName in opts ) {
+    var setOptionMethod = '_setOption' + capitalize( optionName );
+    if ( this[ setOptionMethod ] ) {
+      this[ setOptionMethod ]();
+    }
+  }
+
+};
 
 // widgets that bridget makes
 bridget.Widget = Widget;
