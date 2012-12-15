@@ -23,62 +23,53 @@ function capitalize( str ) {
 // -------------------------- bridget -------------------------- //
 
 /**
- * @returns Function - the plugin class
- * @param {String} namespace
+ * Make a jQuery Widget
+ * @param {String} namespace - the name of the plugin
+ * @param {Function} Widget - plugin constructor class
+ * @returns {Function} Widget - plugin constructor class
 **/
-function bridget( namespace ) {
+function bridget( namespace, Widget ) {
   // create plugin constructor class
-  var className = toDash( namespace );
-  var PluginClass = function( element, options ) {
-    this.element = $( element );
-    // set options,
-    this.options = $.extend( true, {}, this.constructor.defaults, options );
-    this.element.addClass( className );
-    this._create();
-    this._init();
-  };
 
-  // inherit from Widget
-  PluginClass.prototype = new Widget();
+  setOptionMethod( Widget );
 
-  bridge(namespace, PluginClass);
+  bridge( namespace, Widget );
 
-  return PluginClass;
+  return Widget;
 }
 
 // make available in jQuery namespace
 $.bridget = bridget;
 
-// -------------------------- Widget -------------------------- //
-// base class that plugin will inherit from
+// ----- setOptionMethod ----- //
 
-function Widget() {}
-
-Widget.prototype._create = function() {};
-
-Widget.prototype._init = function() {};
-
-// option setter
-Widget.prototype.option = function( opts ) {
-
-  if ( !$.isPlainObject( opts ) ){
+// sets option method on the Widget
+function setOptionMethod( Widget ) {
+  // bail out if already set
+  if ( Widget.prototype.option ) {
     return;
   }
 
-  this.options = $.extend( true, this.options, opts );
+  Widget.prototype.option = function( opts ) {
 
-  // trigger _setOptionName if it exists
-  for ( var optionName in opts ) {
-    var setOptionMethod = '_setOption' + capitalize( optionName );
-    if ( this[ setOptionMethod ] ) {
-      this[ setOptionMethod ]();
+    if ( !$.isPlainObject( opts ) ){
+      return;
     }
-  }
 
-};
+    this.options = $.extend( true, this.options, opts );
 
-// widgets that bridget makes
-bridget.Widget = Widget;
+    // trigger option setter _setOptionName if it exists
+    for ( var optionName in opts ) {
+      var setOptionMethod = '_setOption' + capitalize( optionName );
+      if ( this[ setOptionMethod ] ) {
+        var opt = opts[ optionName ];
+        this[ setOptionMethod ]( opt );
+      }
+    }
+  };
+}
+
+bridget.setOptionMethod = setOptionMethod;
 
 // -------------------------- plugin bridge -------------------------- //
 
@@ -96,7 +87,7 @@ function logError( message ) {
  * @param {String} namespace - plugin name
  * @param {Function} PluginClass - constructor class
  */
-function bridge( namespace, PluginClass ) {
+function bridge( namespace, Widget ) {
   // add to jQuery fn namespace
   $.fn[ namespace ] = function( options ) {
     if ( typeof options === 'string' ) {
@@ -122,11 +113,11 @@ function bridge( namespace, PluginClass ) {
         var instance = $.data( this, namespace );
         if ( instance ) {
           // apply options & init
-          instance.option( options || {} );
+          instance.option( options );
           instance._init();
         } else {
           // initialize new instance
-          instance = new PluginClass( this, options );
+          instance = new Widget( this, options );
           $.data( this, namespace, instance );
         }
       });
