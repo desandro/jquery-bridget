@@ -34,3 +34,7 @@ Create a new widget check
 
 ._init() is a function
 ._create() is a function
+.option sets options
+
+class with _setOptionFoo does extra logic
+

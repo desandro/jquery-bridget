@@ -1,0 +1,7 @@
+{
+  "browser": true,
+  "devel": true,
+  "jquery": true,
+  "strict": true,
+  "undef": true
+}

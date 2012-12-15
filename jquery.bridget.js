@@ -2,8 +2,6 @@
  * Bridget makes jQuery widgets
  */
 
-/*jshint browser: true, curly: true, devel: true, eqeqeq: true, forin: false, immed: false, jquery: true, newcap: true, noempty: true, strict: true, undef: true */
-
 ( function( window, $ ) {
 
 'use strict';
@@ -82,11 +80,15 @@ function onDocReady( namespace ) {
   $( function() {
     $( '.js-' + dashedName ).each( function( elem, i ) {
       var $this = $(this);
+      // get options from data-widget-name-options attribute
       var options = $this.data( dashedName + '-options' );
+      console.log( options );
       $this[ namespace ]( options );
     });
   });
 }
+
+bridget.onDocReady = onDocReady;
 
 
 // -------------------------- plugin bridge -------------------------- //
