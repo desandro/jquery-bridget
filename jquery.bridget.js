@@ -35,6 +35,8 @@ function bridget( namespace, Widget ) {
 
   bridge( namespace, Widget );
 
+  onDocReady( namespace );
+
   return Widget;
 }
 
@@ -70,6 +72,22 @@ function setOptionMethod( Widget ) {
 }
 
 bridget.setOptionMethod = setOptionMethod;
+
+// ----- onDocReady ----- //
+
+// activate widget on doc ready
+// with any matching selector, i.e. js-widget-name
+function onDocReady( namespace ) {
+  var dashedName = toDash( namespace );
+  $( function() {
+    $( '.js-' + dashedName ).each( function( elem, i ) {
+      var $this = $(this);
+      var options = $this.data( dashedName + '-options' );
+      $this[ namespace ]( options );
+    });
+  });
+}
+
 
 // -------------------------- plugin bridge -------------------------- //
 
