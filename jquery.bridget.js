@@ -21,55 +21,62 @@ function capitalize( str ) {
 // -------------------------- bridget -------------------------- //
 
 /**
- * Make a jQuery Widget
+ * Make a jQuery PluginClass
  * @param {String} namespace - the name of the plugin
- * @param {Function} Widget - plugin constructor class
- * @returns {Function} Widget - plugin constructor class
+ * @param {Function} PluginClass - plugin constructor class
+ * @returns {Function} PluginClass - plugin constructor class
 **/
-function bridget( namespace, Widget ) {
+function bridget( namespace, PluginClass ) {
   // create plugin constructor class
 
-  setOptionMethod( Widget );
+  // PluginClass.prototype = new Widget();
 
-  bridge( namespace, Widget );
+  bridge( namespace, PluginClass );
 
   onDocReady( namespace );
 
-  return Widget;
+  return PluginClass;
 }
 
 // make available in jQuery namespace
 $.bridget = bridget;
 
-// ----- setOptionMethod ----- //
+// -------------------------- Widget -------------------------- //
 
-// sets option method on the Widget
-function setOptionMethod( Widget ) {
-  // bail out if already set
-  if ( Widget.prototype.option ) {
+var noop = function() {};
+
+function Widget() {}
+
+Widget.prototype._create = noop;
+
+Widget.prototype._init = noop;
+
+// extend options over defaults
+Widget.prototype._setInitialOptions = function( options ) {
+  options = options || {};
+  var defaults = this.constructor.defaults;
+  this.options = defaults ? $.extend( defaults, options ) : options;
+  console.log( this.constructor, this.options )
+};
+
+// option setter
+Widget.prototype.option = function( opts ) {
+
+  if ( !$.isPlainObject( opts ) ){
     return;
   }
 
-  Widget.prototype.option = function( opts ) {
+  this.options = $.extend( true, this.options, opts );
 
-    if ( !$.isPlainObject( opts ) ){
-      return;
+  // trigger option setter _setOptionName if it exists
+  for ( var optionName in opts ) {
+    var setOptionMethod = '_setOption' + capitalize( optionName );
+    if ( this[ setOptionMethod ] ) {
+      var opt = opts[ optionName ];
+      this[ setOptionMethod ]( opt );
     }
-
-    this.options = $.extend( true, this.options, opts );
-
-    // trigger option setter _setOptionName if it exists
-    for ( var optionName in opts ) {
-      var setOptionMethod = '_setOption' + capitalize( optionName );
-      if ( this[ setOptionMethod ] ) {
-        var opt = opts[ optionName ];
-        this[ setOptionMethod ]( opt );
-      }
-    }
-  };
-}
-
-bridget.setOptionMethod = setOptionMethod;
+  }
+};
 
 // ----- onDocReady ----- //
 
@@ -82,7 +89,6 @@ function onDocReady( namespace ) {
       var $this = $(this);
       // get options from data-widget-name-options attribute
       var options = $this.data( dashedName + '-options' );
-      console.log( options );
       $this[ namespace ]( options );
     });
   });
@@ -107,7 +113,7 @@ function logError( message ) {
  * @param {String} namespace - plugin name
  * @param {Function} PluginClass - constructor class
  */
-function bridge( namespace, Widget ) {
+function bridge( namespace, PluginClass ) {
   // add to jQuery fn namespace
   $.fn[ namespace ] = function( options ) {
     if ( typeof options === 'string' ) {
@@ -137,7 +143,7 @@ function bridge( namespace, Widget ) {
           instance._init();
         } else {
           // initialize new instance
-          instance = new Widget( this, options );
+          instance = new PluginClass( this, options );
           $.data( this, namespace, instance );
         }
       });

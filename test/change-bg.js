@@ -5,12 +5,15 @@
 function ChangeBackground( element, options ) {
   this.element = $(element);
 
-  this.options = $.extend( this.constructor.defaults, options );
+  // this._setInitialOptions( options );
+
+  console.log( this.constructor.name );
 
   this._init();
 }
 
 
+$.bridget( 'changeBackground', ChangeBackground );
 
 ChangeBackground.defaults = {
   color: '#00ACEE'
@@ -24,7 +27,6 @@ ChangeBackground.prototype._init = function() {
 };
 
 
-$.bridget( 'changeBackground', ChangeBackground );
-
+window.ChangeBackground = ChangeBackground;
 
 })( window, jQuery );
