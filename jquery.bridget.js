@@ -18,34 +18,15 @@ function capitalize( str ) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-// -------------------------- bridget -------------------------- //
-
-/**
- * Make a jQuery PluginClass
- * @param {String} namespace - the name of the plugin
- * @param {Function} PluginClass - plugin constructor class
- * @returns {Function} PluginClass - plugin constructor class
-**/
-function bridget( namespace, PluginClass ) {
-  // create plugin constructor class
-
-  // PluginClass.prototype = new Widget();
-
-  bridge( namespace, PluginClass );
-
-  onDocReady( namespace );
-
-  return PluginClass;
+function uncapitalize( str ) {
+  return str.charAt(0).toLowerCase() + str.slice(1);
 }
-
-// make available in jQuery namespace
-$.bridget = bridget;
 
 // -------------------------- Widget -------------------------- //
 
-var noop = function() {};
-
 function Widget() {}
+
+var noop = function() {};
 
 Widget.prototype._create = noop;
 
@@ -56,7 +37,7 @@ Widget.prototype._setInitialOptions = function( options ) {
   options = options || {};
   var defaults = this.constructor.defaults;
   this.options = defaults ? $.extend( defaults, options ) : options;
-  console.log( this.constructor, this.options )
+  console.log( this.constructor, this.options );
 };
 
 // option setter
@@ -77,6 +58,31 @@ Widget.prototype.option = function( opts ) {
     }
   }
 };
+
+// -------------------------- bridget -------------------------- //
+
+/**
+ * Make a jQuery PluginClass
+ * @param {String} namespace - the name of the plugin
+ * @param {Function} PluginClass - plugin constructor class
+ * @returns {Function} PluginClass - plugin constructor class
+**/
+function bridget( PluginClass ) {
+  // create plugin constructor class
+
+  PluginClass.prototype = new Widget();
+
+  var namespace = uncapitalize( PluginClass.name );
+
+  bridge( namespace, PluginClass );
+
+  onDocReady( namespace );
+
+  return PluginClass;
+}
+
+// make available in jQuery namespace
+$.bridget = bridget;
 
 // ----- onDocReady ----- //
 
