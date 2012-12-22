@@ -33,11 +33,11 @@ Widget.prototype._create = noop;
 Widget.prototype._init = noop;
 
 // extend options over defaults
-Widget.prototype._setInitialOptions = function( options ) {
+Widget.prototype._setInitialOptions = function( options, defaults ) {
+  console.log( options, defaults );
   options = options || {};
-  var defaults = this.constructor.defaults;
-  this.options = defaults ? $.extend( defaults, options ) : options;
-  console.log( this.constructor, this.options );
+  this.options = defaults ? $.extend( true, {}, defaults, options ) : options;
+  // console.log( this.constructor, this.options );
 };
 
 // option setter

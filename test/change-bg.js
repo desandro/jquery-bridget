@@ -5,9 +5,7 @@
 function ChangeBackground( element, options ) {
   this.element = $(element);
 
-  this._setInitialOptions( options );
-
-  // console.log( this.constructor.name );
+  this._setInitialOptions( options, ChangeBackground.defaults );
   console.log( this.options );
   this._init();
 }
@@ -20,7 +18,7 @@ ChangeBackground.defaults = {
 };
 
 ChangeBackground.prototype._init = function() {
-  console.log('init');
+  console.log('init', this.options.color );
   this.element.css({
     backgroundColor: this.options.color
   });
