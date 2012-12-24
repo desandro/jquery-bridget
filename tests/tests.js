@@ -6,6 +6,8 @@
 
 'use strict';
 
+// -------------------------- tests -------------------------- //
+
 test( 'bridging it', function() {
   ok( $.fn.niceGreeter, 'plugin added to jQuery namespace, $.fn.niceGreeter' );
 });
@@ -21,6 +23,13 @@ $( function() {
 
   test( 'scripted plugin', function() {
     equal( $ex1.text(), 'hello world', 'default settings' );
+    $ex1.niceGreeter( 'sayHi', 'pretty boy' );
+    equal( $ex1.text(), 'hello pretty boy', 'method' );
+    // shout method, with custom option setter
+    $ex1.niceGreeter({ loudGreeting: 'well hi there' });
+    equal( ex1Greeter.options.loudGreeting, 'WELL HI THERE', 'option setter' );
+    $ex1.niceGreeter('shout');
+    equal( $ex1.text(), 'WELL HI THERE WORLD', 'custom shout method setter' );
   });
 
   // declarative
