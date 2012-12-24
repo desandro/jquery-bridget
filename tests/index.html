@@ -3,34 +3,34 @@
 <head>
   <meta charset="utf-8">
 
-  <title>test</title>
+  <title>Bridget tests</title>
 
   <style>
     body {
       font-family: sans-serif;
     }
-    
-    #box {
-      width: 200px;
-      height: 100px;
+
+    .example {
+      background: #EEE;
+      border-radius: 5px;
     }
+
   </style>
 
 </head>
 <body>
 
-  <h1>test</h1>
+  <h1>Bridget tests</h1>
 
-  <div id="box" class="js-change-background" data-change-background-options='{ "color": "red" }'></div>
+  <div id="ex1" class="example"></div>
 
+  <div id="ex2" class="example js-nice-greeter" data-nice-greeter-options='{ "greeting": "Bonjour", "recipient": "mon ami" }'></div>
+
+<script src="qunit.js"></script>
 <script src="jquery.min.js"></script>
 <script src="../jquery.bridget.js"></script>
-<script src="change-bg.js"></script>
-<script>
-$( function() {
-  $('body').changeBackground();
-});
-</script>
+<script src="greeter.js"></script>
+<script src="tests.js"></script>
 
 </body>
 </html>

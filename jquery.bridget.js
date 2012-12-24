@@ -6,6 +6,8 @@
 
 'use strict';
 
+// -------------------------- utils -------------------------- //
+
 // http://jamesroberts.name/blog/2010/02/22/string-functions-for-javascript-trim-to-camel-case-to-dashed-and-to-underscore/
 function toDash(str) {
   return str.replace(/(.)([A-Z])/g, function(match, $1, $2) {
@@ -65,15 +67,9 @@ function bridget( PluginClass ) {
 
   PluginClass.prototype = new Widget();
 
-  // extend options over defaults
-  PluginClass.prototype._setInitialOptions = function( options ) {
-    options = options || {};
-    var defaults = PluginClass.defaults;
-    this.options = defaults ? $.extend( true, {}, defaults, options ) : options;
-  };
-
   // get namespace from constructor
   var namespace = uncapitalize( PluginClass.name );
+
   // bridge it
   bridge( namespace, PluginClass );
   onDocReady( namespace );

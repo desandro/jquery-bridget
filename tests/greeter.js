@@ -5,21 +5,21 @@
 // Create a plugin constructor class
 function NiceGreeter( element, options ) {
   this.element = $( element );
-  // conveinence method to extend options over defaults
-  this._setIntitialOptions( options );
+  // options from defaults and arguments
+  this.options = $.extend( true, {}, NiceGreeter.defaults, options );
   // widget properties
   this.helloCount = 0;
-  this._init()
+  this._init();
 }
 
-// bridget converts the constructor to a jQuery plugin
-$.bridget( 'greeter', NiceGreeter );
-
-// set defaults for plugin options
+// defaults for plugin options
 NiceGreeter.defaults = {
   greeting: 'hello',
   recipient: 'world'
 };
+
+// bridget converts the constructor to a jQuery plugin
+$.bridget( NiceGreeter );
 
 NiceGreeter.prototype._init = function() {
   this.sayHi()
@@ -33,7 +33,6 @@ NiceGreeter.prototype.sayHi = function( recipient ) {
   this.helloCount++;
   console.log( 'Said ' + this.options.greeting + ' ' + this.helloCount + ' times' );
 };
-
 
 })( window, jQuery );
 
