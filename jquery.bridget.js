@@ -28,21 +28,14 @@ function Widget() {}
 
 var noop = function() {};
 
+// default methods
 Widget.prototype._create = noop;
 
 Widget.prototype._init = noop;
 
-// extend options over defaults
-Widget.prototype._setInitialOptions = function( options, defaults ) {
-  console.log( options, defaults );
-  options = options || {};
-  this.options = defaults ? $.extend( true, {}, defaults, options ) : options;
-  // console.log( this.constructor, this.options );
-};
-
 // option setter
 Widget.prototype.option = function( opts ) {
-
+  // bail out if not an object
   if ( !$.isPlainObject( opts ) ){
     return;
   }
@@ -72,10 +65,17 @@ function bridget( PluginClass ) {
 
   PluginClass.prototype = new Widget();
 
+  // extend options over defaults
+  PluginClass.prototype._setInitialOptions = function( options ) {
+    options = options || {};
+    var defaults = PluginClass.defaults;
+    this.options = defaults ? $.extend( true, {}, defaults, options ) : options;
+  };
+
+  // get namespace from constructor
   var namespace = uncapitalize( PluginClass.name );
-
+  // bridge it
   bridge( namespace, PluginClass );
-
   onDocReady( namespace );
 
   return PluginClass;
