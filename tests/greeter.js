@@ -4,7 +4,7 @@
 
 // Create a plugin constructor class
 function NiceGreeter( element, options ) {
-  this.element = $(element);
+  this.element = $( element );
   // conveinence method to extend options over defaults
   this._setIntitialOptions( options );
   // widget properties

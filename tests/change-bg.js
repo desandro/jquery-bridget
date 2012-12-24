@@ -5,8 +5,8 @@
 function ChangeBackground( element, options ) {
   this.element = $(element);
 
-  this._setInitialOptions( options, ChangeBackground.defaults );
-  console.log( this.options );
+  this._setInitialOptions( options );
+  // console.log( this.options );
   this._init();
 }
 
