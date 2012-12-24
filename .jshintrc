@@ -3,5 +3,10 @@
   "devel": true,
   "jquery": true,
   "strict": true,
-  "undef": true
+  "undef": true,
+  "predef": {
+    "test": false,
+    "ok": false,
+    "equal": false
+  }
 }

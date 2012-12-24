@@ -29,7 +29,7 @@ NiceGreeter.prototype._init = function() {
 // $elem.myPluginWidget( 'sayHi', 'Bridget, darling' );
 NiceGreeter.prototype.sayHi = function( recipient ) {
   recipient = recipient || this.options.recipient;
-  this.element.text( this.options.greeting + recipient );
+  this.element.text( this.options.greeting + ' ' + recipient );
   this.helloCount++;
   console.log( 'Said ' + this.options.greeting + ' ' + this.helloCount + ' times' );
 };
