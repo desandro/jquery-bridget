@@ -100,12 +100,10 @@ bridget.onDocReady = onDocReady;
 
 // helper function for logging errors
 // $.error breaks jQuery chaining
-var hasConsole = typeof console !== 'undefined';
-function logError( message ) {
-  if ( hasConsole ) {
+var logError = typeof console === 'undefined' ? noop :
+  function( message ) {
     console.error( message );
-  }
-}
+  };
 
 /**
  * jQuery plugin bridge, access methods like $elem.plugin('method')
