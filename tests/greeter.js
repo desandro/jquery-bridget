@@ -13,6 +13,8 @@ function NiceGreeter( element, options ) {
   this._init();
 }
 
+NiceGreeter.name = 'NiceGreeter';
+
 // defaults for plugin options
 NiceGreeter.defaults = {
   greeting: 'hello',
