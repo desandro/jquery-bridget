@@ -2,26 +2,21 @@
 
 'use strict';
 
-// Create a plugin constructor class
-function NiceGreeter( element, options ) {
-  this.element = $( element );
-  // options from defaults and arguments
-  this.options = $.extend( true, {}, NiceGreeter.defaults, options );
-  // widget properties
-  this.helloCount = 0;
-  this.shoutCount = 0;
-  this._init();
-}
+var NiceGreeter = $.bridget('niceGreeter');
 
 // defaults for plugin options
-NiceGreeter.defaults = {
+NiceGreeter.prototype.options = {
   greeting: 'hello',
   recipient: 'world',
   loudGreeting: 'HEY'
 };
 
-// bridget converts the constructor to a jQuery plugin
-$.bridget( 'niceGreeter', NiceGreeter );
+NiceGreeter.prototype._create = function() {
+  // initial widget properties
+  this.helloCount = 0;
+  this.shoutCount = 0;
+};
+
 
 // default logic
 // $elem.niceGreeter()

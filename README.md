@@ -24,11 +24,11 @@ MyPluginWidget.prototype.sayHi = function( recipient ) {
 
 ### Test
 
-$.bridget is a function
-$.bridget.bridge is a function
-$.bridget.Widget is a function
-$.bridget.Widget._create() is a function
-$.bridget.Widget._init() is a function
++ $.bridget is a function
++ $.bridget.bridge is a function
++ $.bridget.Widget is a function
++ $.bridget.Widget._create() is a function
++ $.bridget.Widget._init() is a function
 
 Create a new widget check
 
@@ -36,5 +36,6 @@ Create a new widget check
 ._create() is a function
 .option sets options
 
-class with _setOptionFoo does extra logic
+<!-- class with _setOptionFoo does extra logic -->
 
++ `destroy` and `_destroy` methods
