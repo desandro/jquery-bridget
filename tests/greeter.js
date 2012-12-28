@@ -13,8 +13,6 @@ function NiceGreeter( element, options ) {
   this._init();
 }
 
-NiceGreeter.name = 'NiceGreeter';
-
 // defaults for plugin options
 NiceGreeter.defaults = {
   greeting: 'hello',
@@ -23,7 +21,7 @@ NiceGreeter.defaults = {
 };
 
 // bridget converts the constructor to a jQuery plugin
-$.bridget( NiceGreeter );
+$.bridget( 'niceGreeter', NiceGreeter );
 
 // default logic
 // $elem.niceGreeter()

@@ -62,13 +62,10 @@ Widget.prototype.option = function( opts ) {
  * @param {Function} PluginClass - plugin constructor class
  * @returns {Function} PluginClass - plugin constructor class
 **/
-function bridget( PluginClass ) {
+function bridget( namespace, PluginClass ) {
   // create plugin constructor class
 
   PluginClass.prototype = new Widget();
-
-  // get namespace from constructor
-  var namespace = uncapitalize( PluginClass.name );
 
   // bridge it
   bridge( namespace, PluginClass );
