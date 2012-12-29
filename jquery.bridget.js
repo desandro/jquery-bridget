@@ -59,13 +59,13 @@ Widget.prototype.option = function( opts ) {
 /**
  * Make a jQuery PluginClass
  * @param {String} namespace - the name of the plugin
- * @param {Function} PluginClass - plugin constructor class
  * @returns {Function} PluginClass - plugin constructor class
 **/
 function bridget( namespace ) {
   // create plugin constructor class
   function PluginClass( element, options ) {
     this.element = $( element );
+    // instance options extended from default options
     this.options = $.extend( {}, this.options, options || {} );
     this._create();
     this._init();
