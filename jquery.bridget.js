@@ -98,7 +98,6 @@ function createPluginClass() {
 function extendWidgetMethods( PluginClass ) {
   // copy over required methods if they're not already there
   for ( var method in Widget.prototype ) {
-    console.log( method, PluginClass.prototype[ method ], !PluginClass.prototype[ method ] );
     if ( !PluginClass.prototype[ method ] ) {
       PluginClass.prototype[ method ] = Widget.prototype[ method ];
     }
