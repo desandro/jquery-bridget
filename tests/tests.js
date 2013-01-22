@@ -52,6 +52,18 @@ $( function() {
     );
   });
 
+  test( 'baller', function() {
+    $ex2.baller();
+    var myBaller = $ex2.data('baller');
+    ok( myBaller, 'instance is there' );
+    equal( myBaller.rims, 'a-plenty', '_create method was not overwritten' );
+    $ex2.baller( 'option', {
+      foo: 'bar'
+    });
+    equal( myBaller.options.foo, 'bar', 'option setter works' );
+
+  });
+
 });
 
 

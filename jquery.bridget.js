@@ -1,5 +1,6 @@
 /**
  * Bridget makes jQuery widgets
+ * v0.0.2
  */
 
 ( function( window, $ ) {
@@ -59,19 +60,17 @@ Widget.prototype.option = function( opts ) {
 /**
  * Make a jQuery PluginClass
  * @param {String} namespace - the name of the plugin
+ * @param {Function} PluginClass - plugin constructor class
  * @returns {Function} PluginClass - plugin constructor class
-**/
-function bridget( namespace ) {
-  // create plugin constructor class
-  function PluginClass( element, options ) {
-    this.element = $( element );
-    // instance options extended from default options
-    this.options = $.extend( {}, this.options, options || {} );
-    this._create();
-    this._init();
-  }
+ */
 
-  PluginClass.prototype = new Widget();
+function bridget( namespace, PluginClass ) {
+
+  if ( PluginClass ) {
+    extendWidgetMethods( PluginClass );
+  } else {
+    PluginClass = createPluginClass();
+  }
 
   // bridge it
   bridge( namespace, PluginClass );
@@ -82,6 +81,29 @@ function bridget( namespace ) {
 
 // make available in jQuery namespace
 $.bridget = bridget;
+
+function createPluginClass() {
+  function PluginClass( element, options ) {
+    this.element = $( element );
+    // instance options extended from default options
+    this.options = $.extend( {}, this.options, options || {} );
+    this._create();
+    this._init();
+  }
+
+  PluginClass.prototype = new Widget();
+  return PluginClass;
+}
+
+function extendWidgetMethods( PluginClass ) {
+  // copy over required methods if they're not already there
+  for ( var method in Widget.prototype ) {
+    console.log( method, PluginClass.prototype[ method ], !PluginClass.prototype[ method ] );
+    if ( !PluginClass.prototype[ method ] ) {
+      PluginClass.prototype[ method ] = Widget.prototype[ method ];
+    }
+  }
+}
 
 // ----- onDocReady ----- //
 
