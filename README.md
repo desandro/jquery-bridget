@@ -9,7 +9,6 @@ It's based off of the [jQuery UI widget factory](http://jqueryui.com/widget/). Y
 function NiceGreeter( element, options ) {
   this.element = $( element );
   this.options = $.extend( true, {}, this.options, options );
-  this._create();
   this._init();
 }
 // defaults for plugin options
