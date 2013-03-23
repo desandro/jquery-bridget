@@ -14,6 +14,8 @@ if ( !$ ) {
 
 // -------------------------- utils -------------------------- //
 
+var slice = Array.prototype.slice;
+
 function noop() {}
 
 // -------------------------- addOptionMethod -------------------------- //
@@ -59,15 +61,16 @@ function bridge( namespace, PluginClass ) {
     if ( typeof options === 'string' ) {
       // call plugin method when first argument is a string
       // get arguments for method
-      var args = Array.prototype.slice.call( arguments, 1 );
+      var args = slice.call( arguments, 1 );
+
       this.each( function() {
         var instance = $.data( this, namespace );
         if ( !instance ) {
           logError( "cannot call methods on " + namespace + " prior to initialization; " +
-            "attempted to call method '" + options + "'" );
+            "attempted to call '" + options + "'" );
           return;
         }
-        if ( !$.isFunction(instance[options]) || options.charAt(0) === "_" ) {
+        if ( !$.isFunction( instance[options] ) || options.charAt(0) === '_' ) {
           logError( "no such method '" + options + "' for " + namespace + " instance" );
           return;
         }
@@ -104,7 +107,6 @@ function bridge( namespace, PluginClass ) {
 $.bridget = function( namespace, PluginClass ) {
   addOptionMethod( PluginClass );
   bridge( namespace, PluginClass );
-  // console.log('bridgeted', namespace );
 };
 
 })( window, jQuery );

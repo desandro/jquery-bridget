@@ -57,6 +57,11 @@ NiceGreeter.prototype.shout = function( recipient ) {
   console.log( 'Shouted ' + greeting + ' ' + this.shoutCount + ' times' );
 };
 
+// private method
+NiceGreeter.prototype._whisper = function( message ) {
+  this.element.text( message );
+};
+
 window.NiceGreeter = NiceGreeter;
 
 })( window, jQuery );

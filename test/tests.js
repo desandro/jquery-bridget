@@ -23,37 +23,25 @@ $( function() {
   test( 'niceGreeter', function() {
     var $ex1 = $('#ex1');
     $ex1.niceGreeter();
-    var ex1Greeter = $ex1.data('niceGreeter');
+    var greeter = $ex1.data('niceGreeter');
+    equal( typeof $ex1.data('niceGreeter'), 'object', 'instance accessible in .data()' );
     equal( $ex1.text(), 'hello world', 'default settings' );
+    // method with argument
     $ex1.niceGreeter( 'sayHi', 'pretty boy' );
-    equal( $ex1.text(), 'hello pretty boy', 'method' );
-    // shout method
+    equal( $ex1.text(), 'hello pretty boy', 'sayHi method with argument' );
+    // option setter
+    $ex1.niceGreeter( 'option', { greeting: 'bonjour' }).niceGreeter();
+    equal( greeter.options.greeting, 'bonjour', 'greeter.options.greeting = bonjour' );
+    equal( $ex1.text(), 'bonjour world', 'option setter' );
+    // method
     $ex1.niceGreeter({ loudGreeting: 'well hi there' });
     $ex1.niceGreeter('shout');
-    equal( $ex1.text(), 'WELL HI THERE WORLD', 'custom shout method setter' );
-  });
-
-  // declarative
-
-  var $ex2 = $('#ex2');
-
-  test( 'baller', function() {
-    $ex2.baller();
-    var myBaller = $ex2.data('baller');
-    ok( myBaller, 'instance is there' );
-    equal( myBaller.rims, 'a-plenty', '_create method was not overwritten' );
-    $ex2.baller( 'option', {
-      foo: 'bar'
-    });
-    equal( myBaller.options.foo, 'bar', 'option setter works' );
-
+    equal( $ex1.text(), 'WELL HI THERE WORLD', 'shout method with argument' );
+    // private method _whisper
+    $ex1.niceGreeter( '_whisper', 'sweet nothings' );
+    notEqual( $ex1.text(), 'sweet nothings', 'private method _whisper is private' );
   });
 
 });
-
-
-// option setter
-
-
 
 })( window, jQuery );

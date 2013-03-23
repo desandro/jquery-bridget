@@ -8,6 +8,7 @@
   "predef": {
     "test": false,
     "ok": false,
-    "equal": false
+    "equal": false,
+    "notEqual": false
   }
 }

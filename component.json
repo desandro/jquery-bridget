@@ -3,6 +3,7 @@
   "version": "0.0.2",
   "main": "./jquery.bridget.js",
   "devDependencies": {
-    "jquery": ">=1.4.2"
+    "jquery": ">=1.4.2",
+    "qunit": "~1.10"
   }
 }
