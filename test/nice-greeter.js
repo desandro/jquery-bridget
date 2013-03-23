@@ -54,6 +54,11 @@ NiceGreeter.prototype._whisper = function( message ) {
   this.element.text( message );
 };
 
+// getter method
+NiceGreeter.prototype.getMessage = function() {
+  return this.options.greeting + ' ' + this.options.recipient;
+};
+
 window.NiceGreeter = NiceGreeter;
 
 })( window, jQuery );
