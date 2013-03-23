@@ -21,9 +21,9 @@ function capitalize( str ) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-function uncapitalize( str ) {
-  return str.charAt(0).toLowerCase() + str.slice(1);
-}
+// function uncapitalize( str ) {
+//   return str.charAt(0).toLowerCase() + str.slice(1);
+// }
 
 // -------------------------- Widget -------------------------- //
 
@@ -111,7 +111,7 @@ function extendWidgetMethods( PluginClass ) {
 function onDocReady( namespace ) {
   var dashedName = toDash( namespace );
   $( function() {
-    $( '.js-' + dashedName ).each( function( elem, i ) {
+    $( '.js-' + dashedName ).each( function() {
       var $this = $(this);
       // get options from data-widget-name-options attribute
       var options = $this.data( dashedName + '-options' );
