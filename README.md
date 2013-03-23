@@ -1,41 +1,49 @@
-# Bridget makes jQuery widgets
+# Bridget makes jQuery plugins
 
-Based off of the jQuery UI widget factory. You should probably use that, since it's very good. I use this, since it's a bit simpler. Used for Masonry and Isotope.
+Bridget makes a jQuery plugin out of a constructor.
+
+It's based off of the [jQuery UI widget factory](http://jqueryui.com/widget/). You should probably use that, since it's very good. I use this, since it's a bit simpler. Used for [Packery](http://packery.metafizzy.co).
 
 ``` js
-var MyPluginWidget = $.bridget('myPluginWidget');
-
-// set defaults for plugin options
-MyPluginWidget.defaults = {
-  foo: true,
-  bar: 'baz',
-  num: 12
+// plugin constructor
+function NiceGreeter( element, options ) {
+  this.element = $( element );
+  this.options = $.extend( true, {}, this.options, options );
+  this._create();
+  this._init();
+}
+// defaults for plugin options
+NiceGreeter.prototype.options = {
+  greeting: 'hello',
+  recipient: 'world'
 };
-
-// enable plugin methods
-// $elem.myPluginWidget( 'sayHi', 'Bridget, darling' );
-MyPluginWidget.prototype.sayHi = function( recipient ) {
-  recipient = recipient || 'world';
-  console.log( 'Hello ' + recipient );
+// main plugin logic
+NiceGreeter.prototype._init = function() {
+  this.element.text( this.options.greeting + ' ' + this.options.recipient );
 };
+// convert constructor to jQuery plugin
+$.bridget( 'niceGreeter', NiceGreeter );
+
+// now the constructor can be used as a jQuery plugin
+var $elem = $('#elem');
+$elem.niceGreeter();
+// >> h1 text will be 'hello world'
+
+// set options
+$elem.niceGreeter({
+  greeting: 'bonjour',
+  recipient: 'mon ami'
+});
+// >> text will be 'bonjour mon ami'
+
+// access constructor instance via .data()
+var myGreeter = $elem.data('niceGreeter');
 ```
 
-## TODO
+## Bower
 
-### Test
+Bridget is a [Bower](http://twitter.github.com/bower) component.
 
-+ $.bridget is a function
-+ $.bridget.bridge is a function
-+ $.bridget.Widget is a function
-+ $.bridget.Widget._create() is a function
-+ $.bridget.Widget._init() is a function
-
-Create a new widget check
-
-._init() is a function
-._create() is a function
-.option sets options
-
-<!-- class with _setOptionFoo does extra logic -->
-
-+ `destroy` and `_destroy` methods
+``` bash
+bower install desandro/jquery-bridget
+```

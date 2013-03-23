@@ -6,17 +6,9 @@
 
 'use strict';
 
-function extend( a, b ) {
-  for ( var prop in b ) {
-    a[ prop ] = b[ prop ];
-  }
-  return a;
-}
-
 function NiceGreeter( element, options ) {
   this.element = $( element );
-  this.options = extend( {}, this.options );
-  extend( this.options, options );
+  this.options = $.extend( true, {}, this.options, options );
   this._create();
   this._init();
 }
