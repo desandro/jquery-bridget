@@ -1,8 +1,25 @@
+/**
+ * NiceGreeter test plugin
+ */
+
 ( function( window, $ ) {
 
 'use strict';
 
-var NiceGreeter = $.bridget('niceGreeter');
+function extend( a, b ) {
+  for ( var prop in b ) {
+    a[ prop ] = b[ prop ];
+  }
+  return a;
+}
+
+function NiceGreeter( element, options ) {
+  this.element = $( element );
+  this.options = extend( {}, this.options );
+  extend( this.options, options );
+  this._create();
+  this._init();
+}
 
 // defaults for plugin options
 NiceGreeter.prototype.options = {
@@ -16,7 +33,6 @@ NiceGreeter.prototype._create = function() {
   this.helloCount = 0;
   this.shoutCount = 0;
 };
-
 
 // default logic
 // $elem.niceGreeter()
@@ -33,18 +49,14 @@ NiceGreeter.prototype.sayHi = function( recipient ) {
   console.log( 'Said ' + this.options.greeting + ' ' + this.helloCount + ' times' );
 };
 
-// option setter
-NiceGreeter.prototype._setOptionLoudGreeting = function( loudGreeting ) {
-  // capitalize loud greeting
-  this.options.loudGreeting = loudGreeting.toUpperCase();
+NiceGreeter.prototype.shout = function( recipient ) {
+  var greeting = this.options.loudGreeting.toUpperCase();
+  recipient = ( recipient || this.options.recipient ).toUpperCase();
+  this.element.text( greeting + ' ' + recipient );
+  this.shoutCount++;
+  console.log( 'Shouted ' + greeting + ' ' + this.shoutCount + ' times' );
 };
 
-NiceGreeter.prototype.shout = function( recipient ) {
-  recipient = ( recipient || this.options.recipient ).toUpperCase();
-  this.element.text( this.options.loudGreeting + ' ' + recipient );
-  this.shoutCount++;
-  console.log( 'Shouted ' + this.options.loudGreeting + ' ' + this.shoutCount + ' times' );
-};
+window.NiceGreeter = NiceGreeter;
 
 })( window, jQuery );
-

@@ -7,120 +7,36 @@
 
 'use strict';
 
+// bail if no jQuery
+if ( !$ ) {
+  return;
+}
+
 // -------------------------- utils -------------------------- //
 
-// http://jamesroberts.name/blog/2010/02/22/string-functions-for-javascript-trim-to-camel-case-to-dashed-and-to-underscore/
-function toDash(str) {
-  return str.replace(/(.)([A-Z])/g, function(match, $1, $2) {
-    return $1 + '-' + $2;
-  }).toLowerCase();
-}
+function noop() {}
 
-// helper function
-function capitalize( str ) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
+// -------------------------- addOptionMethod -------------------------- //
 
-// function uncapitalize( str ) {
-//   return str.charAt(0).toLowerCase() + str.slice(1);
-// }
-
-// -------------------------- Widget -------------------------- //
-
-function Widget() {}
-
-var noop = function() {};
-
-// default methods
-Widget.prototype._create = noop;
-
-Widget.prototype._init = noop;
-
-// option setter
-Widget.prototype.option = function( opts ) {
-  // bail out if not an object
-  if ( !$.isPlainObject( opts ) ){
+/**
+ * adds option method -> $().plugin('option', {...})
+ * @param {Function} PluginClass - constructor class
+ */
+function addOptionMethod( PluginClass ) {
+  // don't overwrite original option method
+  if ( PluginClass.prototype.option ) {
     return;
   }
 
-  this.options = $.extend( true, this.options, opts );
-
-  // trigger option setter _setOptionName if it exists
-  for ( var optionName in opts ) {
-    var setOptionMethod = '_setOption' + capitalize( optionName );
-    if ( this[ setOptionMethod ] ) {
-      var opt = opts[ optionName ];
-      this[ setOptionMethod ]( opt );
+  // option setter
+  PluginClass.prototype.option = function( opts ) {
+    // bail out if not an object
+    if ( !$.isPlainObject( opts ) ){
+      return;
     }
-  }
-};
-
-// -------------------------- bridget -------------------------- //
-
-/**
- * Make a jQuery PluginClass
- * @param {String} namespace - the name of the plugin
- * @param {Function} PluginClass - plugin constructor class
- * @returns {Function} PluginClass - plugin constructor class
- */
-
-function bridget( namespace, PluginClass ) {
-
-  if ( PluginClass ) {
-    extendWidgetMethods( PluginClass );
-  } else {
-    PluginClass = createPluginClass();
-  }
-
-  // bridge it
-  bridge( namespace, PluginClass );
-  onDocReady( namespace );
-
-  return PluginClass;
+    this.options = $.extend( true, this.options, opts );
+  };
 }
-
-// make available in jQuery namespace
-$.bridget = bridget;
-
-function createPluginClass() {
-  function PluginClass( element, options ) {
-    this.element = $( element );
-    // instance options extended from default options
-    this.options = $.extend( {}, this.options, options || {} );
-    this._create();
-    this._init();
-  }
-
-  PluginClass.prototype = new Widget();
-  return PluginClass;
-}
-
-function extendWidgetMethods( PluginClass ) {
-  // copy over required methods if they're not already there
-  for ( var method in Widget.prototype ) {
-    if ( !PluginClass.prototype[ method ] ) {
-      PluginClass.prototype[ method ] = Widget.prototype[ method ];
-    }
-  }
-}
-
-// ----- onDocReady ----- //
-
-// activate widget on doc ready
-// with any matching selector, i.e. js-widget-name
-function onDocReady( namespace ) {
-  var dashedName = toDash( namespace );
-  $( function() {
-    $( '.js-' + dashedName ).each( function() {
-      var $this = $(this);
-      // get options from data-widget-name-options attribute
-      var options = $this.data( dashedName + '-options' );
-      $this[ namespace ]( options );
-    });
-  });
-}
-
-bridget.onDocReady = onDocReady;
 
 
 // -------------------------- plugin bridge -------------------------- //
@@ -177,7 +93,18 @@ function bridge( namespace, PluginClass ) {
 
 }
 
-// expose in bridget's namespace
-bridget.bridge = bridge;
+// -------------------------- bridget -------------------------- //
+
+/**
+ * converts a Prototypical class into a proper jQuery plugin
+ *   the class must have a ._init method
+ * @param {String} namespace - plugin name, used in $().pluginName
+ * @param {Function} PluginClass - constructor class
+ */
+$.bridget = function( namespace, PluginClass ) {
+  addOptionMethod( PluginClass );
+  bridge( namespace, PluginClass );
+  // console.log('bridgeted', namespace );
+};
 
 })( window, jQuery );
