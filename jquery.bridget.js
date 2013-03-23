@@ -1,6 +1,6 @@
 /**
  * Bridget makes jQuery widgets
- * v0.1.0
+ * v0.1.1
  */
 
 ( function( window, $ ) {
@@ -63,22 +63,31 @@ function bridge( namespace, PluginClass ) {
       // get arguments for method
       var args = slice.call( arguments, 1 );
 
-      this.each( function() {
-        var instance = $.data( this, namespace );
+      for ( var i=0, len = this.length; i < len; i++ ) {
+        var elem = this[i];
+        var instance = $.data( elem, namespace );
         if ( !instance ) {
           logError( "cannot call methods on " + namespace + " prior to initialization; " +
             "attempted to call '" + options + "'" );
-          return;
+          continue;
         }
         if ( !$.isFunction( instance[options] ) || options.charAt(0) === '_' ) {
           logError( "no such method '" + options + "' for " + namespace + " instance" );
-          return;
+          continue;
         }
+
         // trigger method with arguments
-        instance[ options ].apply( instance, args );
-      });
+        var returnValue = instance[ options ].apply( instance, args );
+
+        // break look and return first value if provided
+        if ( returnValue !== undefined ) {
+          return returnValue;
+        }
+      }
+      // return this if no return value
+      return this;
     } else {
-      this.each( function() {
+      return this.each( function() {
         var instance = $.data( this, namespace );
         if ( instance ) {
           // apply options & init
@@ -91,7 +100,6 @@ function bridge( namespace, PluginClass ) {
         }
       });
     }
-    return this;
   };
 
 }

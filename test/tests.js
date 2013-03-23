@@ -30,7 +30,9 @@ $( function() {
     $ex1.niceGreeter( 'sayHi', 'pretty boy' );
     equal( $ex1.text(), 'hello pretty boy', 'sayHi method with argument' );
     // option setter
-    $ex1.niceGreeter( 'option', { greeting: 'bonjour' }).niceGreeter();
+    var ret = $ex1.niceGreeter( 'option', { greeting: 'bonjour' })
+    equal( ret, $ex1, 'return value of method is jQuery object' );
+    ret.niceGreeter();
     equal( greeter.options.greeting, 'bonjour', 'greeter.options.greeting = bonjour' );
     equal( $ex1.text(), 'bonjour world', 'option setter' );
     // method
@@ -40,6 +42,23 @@ $( function() {
     // private method _whisper
     $ex1.niceGreeter( '_whisper', 'sweet nothings' );
     notEqual( $ex1.text(), 'sweet nothings', 'private method _whisper is private' );
+
+    // set second instance
+    var $ex2 = $('#ex2').niceGreeter({
+      greeting: 'aloha',
+      recipient: 'uncle'
+    });
+    var greeter2 = $ex2.data('niceGreeter');
+    var $examples = $('.example');
+    // method on multiple instances
+    $examples.niceGreeter( 'option', {
+      loudGreeting: 'yaaarg'
+    });
+    equal( greeter.options.loudGreeting, 'yaaarg', 'first greeter method worked' );
+    equal( greeter2.options.loudGreeting, 'yaaarg', 'second greeter method worked' );
+    // getter method
+    var message = $examples.niceGreeter('getMessage');
+    equal( message, 'bonjour world', 'getter method returns first value' );
   });
 
 });
