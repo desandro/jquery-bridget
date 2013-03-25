@@ -30,7 +30,7 @@ $( function() {
     $ex1.niceGreeter( 'sayHi', 'pretty boy' );
     equal( $ex1.text(), 'hello pretty boy', 'sayHi method with argument' );
     // option setter
-    var ret = $ex1.niceGreeter( 'option', { greeting: 'bonjour' })
+    var ret = $ex1.niceGreeter( 'option', { greeting: 'bonjour' });
     equal( ret, $ex1, 'return value of method is jQuery object' );
     ret.niceGreeter();
     equal( greeter.options.greeting, 'bonjour', 'greeter.options.greeting = bonjour' );
@@ -63,4 +63,4 @@ $( function() {
 
 });
 
-})( window, jQuery );
+})( window, window.jQuery );

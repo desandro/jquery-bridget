@@ -1,6 +1,6 @@
 /**
  * Bridget makes jQuery widgets
- * v0.1.1
+ * v0.1.2
  */
 
 ( function( window, $ ) {
@@ -117,4 +117,4 @@ $.bridget = function( namespace, PluginClass ) {
   bridge( namespace, PluginClass );
 };
 
-})( window, jQuery );
+})( window, window.jQuery );
