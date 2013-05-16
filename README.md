@@ -2,7 +2,7 @@
 
 Bridget makes a jQuery plugin out of a constructor.
 
-It's based off of the [jQuery UI widget factory](http://jqueryui.com/widget/). You should probably use that, since it's very good. I use this, since it's a bit simpler. Used for [Packery](http://packery.metafizzy.co).
+It's based off of the [jQuery UI widget factory](http://jqueryui.com/widget/). You should probably use that, since it's very good. I use this, since it's a bit simpler. Used for [Masonry](http://masonry.desandro.com), [Isotope](http://isotope.metafizzy.co), and  [Packery](http://packery.metafizzy.co).
 
 ## Plugin constructor
 
@@ -60,7 +60,7 @@ Getter methods can still be used. For jQuery objects with multiple elements, get
 
 ## Bower
 
-Bridget is a [Bower](http://twitter.github.com/bower) component.
+Bridget is a [Bower](http://bower.io) component.
 
 ``` bash
 bower install desandro/jquery-bridget
