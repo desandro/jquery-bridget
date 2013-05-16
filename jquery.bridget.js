@@ -1,22 +1,26 @@
 /**
  * Bridget makes jQuery widgets
- * v0.1.2
+ * v1.0.0
  */
 
-( function( window, $ ) {
+( function( window ) {
 
 'use strict';
-
-// bail if no jQuery
-if ( !$ ) {
-  return;
-}
 
 // -------------------------- utils -------------------------- //
 
 var slice = Array.prototype.slice;
 
 function noop() {}
+
+// -------------------------- definition -------------------------- //
+
+function defineBridget( $ ) {
+
+// bail if no jQuery
+if ( !$ ) {
+  return;
+}
 
 // -------------------------- addOptionMethod -------------------------- //
 
@@ -117,4 +121,15 @@ $.bridget = function( namespace, PluginClass ) {
   bridge( namespace, PluginClass );
 };
 
-})( window, window.jQuery );
+}
+
+// transport
+if ( typeof define === 'function' && define.amd ) {
+  // AMD
+  define( [ 'jquery' ], defineBridget );
+} else {
+  // get jquery from browser global
+  defineBridget( window.jQuery );
+}
+
+})( window );

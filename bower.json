@@ -1,7 +1,8 @@
 {
   "name": "jquery-bridget",
-  "version": "0.1.2",
-  "main": "./jquery.bridget.js",
+  "version": "1.0.0",
+  "main": "jquery.bridget.js",
+  "description": "Bridget makes jQuery widgets",
   "devDependencies": {
     "jquery": ">=1.4.2",
     "qunit": "~1.10"

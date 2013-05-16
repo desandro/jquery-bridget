@@ -5,6 +5,7 @@
   "undef": true,
   "unused": true,
   "predef": {
+    "define": false,
     "test": false,
     "ok": false,
     "equal": false,
