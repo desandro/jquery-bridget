@@ -6,7 +6,7 @@ It's based off of the [jQuery UI widget factory](http://jqueryui.com/widget/). Y
 
 ## Plugin constructor
 
-A plugin constructor uses Prototypical pattern. It needs to have a `._init()` method used for its main logic.
+A plugin constructor uses Prototypal pattern. It needs to have a `._init()` method used for its main logic.
 
 ``` js
 // plugin constructor
