@@ -63,5 +63,5 @@ Getter methods can still be used. For jQuery objects with multiple elements, get
 Bridget is a [Bower](http://bower.io) component.
 
 ``` bash
-bower install desandro/jquery-bridget
+bower install jquery-bridget
 ```
