@@ -65,3 +65,10 @@ Bridget is a [Bower](http://bower.io) component.
 ``` bash
 bower install jquery-bridget
 ```
+## Component
+
+Bridget can also be installed via [component](http://github.com/component/component).
+
+``` bash
+component install desandro/jquery-bridget
+```
