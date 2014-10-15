@@ -130,6 +130,9 @@ return $.bridget;
 if ( typeof define === 'function' && define.amd ) {
   // AMD
   define( [ 'jquery' ], defineBridget );
+} else if (typeof exports === 'object') {
+  // CommonJS
+  module.exports = defineBridget(require('jquery'));
 } else {
   // get jquery from browser global
   defineBridget( window.jQuery );
