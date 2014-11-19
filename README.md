@@ -60,17 +60,11 @@ Getter methods can still be used. For jQuery objects with multiple elements, get
 
 ## Package managers
 
-Install with [:bird: Bower](http://bower.io).
+Install with [Bower :bird:](http://bower.io): `bower install jquery-bridget`
 
-``` bash
-bower install jquery-bridget
-```
+Install with npm `npm install jquery-bridget`
 
-Install with [:nut_and_bolt: component](http://github.com/component/component).
-
-``` bash
-component install desandro/jquery-bridget
-```
+Install with [component](http://github.com/component/component): `component install desandro/jquery-bridget`
 
 ## MIT license
 
