@@ -45,7 +45,6 @@ function addOptionMethod( PluginClass ) {
   };
 }
 
-
 // -------------------------- plugin bridge -------------------------- //
 
 // helper function for logging errors
@@ -130,6 +129,8 @@ return $.bridget;
 if ( typeof define === 'function' && define.amd ) {
   // AMD
   define( [ 'jquery' ], defineBridget );
+} else if ( typeof exports === 'object' ) {
+  defineBridget( require('jquery') );
 } else {
   // get jquery from browser global
   defineBridget( window.jQuery );

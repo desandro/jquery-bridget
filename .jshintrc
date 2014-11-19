@@ -9,6 +9,7 @@
     "test": false,
     "ok": false,
     "equal": false,
-    "notEqual": false
+    "notEqual": false,
+    "require": false
   }
 }
