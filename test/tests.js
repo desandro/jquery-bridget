@@ -2,6 +2,9 @@
  * Bridget tests
  */
 
+/* jshint browser: true, undef: true, unused: true, qunit: true */
+/* globals jQueryBridget: false */
+
 ( function( window, $ ) {
 
 'use strict';
@@ -59,6 +62,12 @@ $( function() {
     // getter method
     var message = $examples.niceGreeter('getMessage');
     equal( message, 'bonjour world', 'getter method returns first value' );
+  });
+
+  jQueryBridget( 'noopPlugin', function() {} );
+
+  test( 'jQueryBridget', function() {
+    ok( $.fn.noopPlugin, 'jQueryBridget()' );
   });
 
 });

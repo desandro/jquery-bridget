@@ -2,6 +2,8 @@
  * NiceGreeter test plugin
  */
 
+/* jshint browser: true, undef: true, unused: true, devel: true, jquery: true */
+
 ( function( window, $ ) {
 
 'use strict';
