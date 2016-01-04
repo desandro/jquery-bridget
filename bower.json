@@ -4,7 +4,7 @@
   "main": "jquery-bridget.js",
   "description": "Bridget makes jQuery widgets",
   "dependencies": {
-    "jquery": ">=1.4.2 <3"
+    "jquery": ">=1.4.2 <4"
   },
   "devDependencies": {
     "qunit": "~1.10"
@@ -29,6 +29,7 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "package.json"
   ]
 }
