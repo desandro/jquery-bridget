@@ -8,20 +8,28 @@
 
 ( function( window, factory ) {
   'use strict';
-  /* globals define: false, module: false */
+  /* globals define: false, module: false, require: false */
 
   if ( typeof define == 'function' && define.amd ) {
     // AMD
-    define( factory( window ) );
+    define( [ 'jquery' ], function( jQuery ) {
+      factory( window, jQuery );
+    });
   } else if ( typeof module == 'object' && module.exports ) {
     // CommonJS
-    module.exports = factory( window );
+    module.exports = factory(
+      window,
+      require('jquery')
+    );
   } else {
     // browser global
-    window.jQueryBridget = factory( window );
+    window.jQueryBridget = factory(
+      window,
+      window.jQuery
+    );
   }
 
-}( window, function factory( window ) {
+}( window, function factory( window, jQuery ) {
 'use strict';
 
 // ----- utils ----- //
@@ -39,7 +47,7 @@ var logError = typeof console == 'undefined' ? function() {} :
 // ----- jQueryBridget ----- //
 
 function jQueryBridget( namespace, PluginClass, $ ) {
-  $ = $ || window.jQuery;
+  $ = $ || jQuery || window.jQuery;
   if ( !$ ) {
     return;
   }
@@ -127,7 +135,7 @@ function updateJQuery( $ ) {
   $.bridget = jQueryBridget;
 }
 
-updateJQuery( window.jQuery );
+updateJQuery( jQuery || window.jQuery );
 
 // -----  ----- //
 
