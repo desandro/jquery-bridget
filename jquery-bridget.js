@@ -46,7 +46,7 @@ var logError = typeof console == 'undefined' ? function() {} :
 // ----- jQueryBridget ----- //
 
 function jQueryBridget( namespace, PluginClass, $ ) {
-  $ = $ || jQuery || window.jQuery;
+  $ = $ && $.fn.jQuery || jQuery || window.jQuery;
   if ( !$ ) {
     return;
   }
