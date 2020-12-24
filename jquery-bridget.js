@@ -4,41 +4,32 @@
  * MIT license
  */
 
-/* jshint browser: true, strict: true, undef: true, unused: true */
-
 ( function( window, factory ) {
-  // universal module definition
-  /*jshint strict: false */ /* globals define, module, require */
-  if ( typeof define == 'function' && define.amd ) {
-    // AMD
-    define( [ 'jquery' ], function( jQuery ) {
-      return factory( window, jQuery );
-    });
-  } else if ( typeof module == 'object' && module.exports ) {
-    // CommonJS
-    module.exports = factory(
-      window,
-      require('jquery')
-    );
-  } else {
-    // browser global
-    window.jQueryBridget = factory(
-      window,
-      window.jQuery
-    );
-  }
+  // module definition
+ if ( typeof module == 'object' && module.exports ) {
+   // CommonJS
+   module.exports = factory(
+       window,
+       require('jquery'),
+   );
+ } else {
+   // browser global
+   window.jQueryBridget = factory(
+       window,
+       window.jQuery,
+   );
+ }
 
 }( window, function factory( window, jQuery ) {
-'use strict';
 
 // ----- utils ----- //
 
-var arraySlice = Array.prototype.slice;
+let arraySlice = Array.prototype.slice;
 
 // helper function for logging errors
 // $.error breaks jQuery chaining
-var console = window.console;
-var logError = typeof console == 'undefined' ? function() {} :
+let console = window.console;
+let logError = typeof console == 'undefined' ? function() {} :
   function( message ) {
     console.error( message );
   };
@@ -56,7 +47,7 @@ function jQueryBridget( namespace, PluginClass, $ ) {
     // option setter
     PluginClass.prototype.option = function( opts ) {
       // bail out if not an object
-      if ( !$.isPlainObject( opts ) ){
+      if ( !$.isPlainObject( opts ) ) {
         return;
       }
       this.options = $.extend( true, this.options, opts );
@@ -64,11 +55,11 @@ function jQueryBridget( namespace, PluginClass, $ ) {
   }
 
   // make jQuery plugin
-  $.fn[ namespace ] = function( arg0 /*, arg1 */ ) {
+  $.fn[ namespace ] = function( arg0 /* , arg1 */ ) {
     if ( typeof arg0 == 'string' ) {
       // method call $().plugin( 'methodName', { options } )
       // shift arguments by 1
-      var args = arraySlice.call( arguments, 1 );
+      let args = arraySlice.call( arguments, 1 );
       return methodCall( this, arg0, args );
     }
     // just $().plugin({ options })
@@ -78,36 +69,36 @@ function jQueryBridget( namespace, PluginClass, $ ) {
 
   // $().plugin('methodName')
   function methodCall( $elems, methodName, args ) {
-    var returnValue;
-    var pluginMethodStr = '$().' + namespace + '("' + methodName + '")';
+    let returnValue;
+    let pluginMethodStr = '$().' + namespace + '("' + methodName + '")';
 
     $elems.each( function( i, elem ) {
       // get instance
-      var instance = $.data( elem, namespace );
+      let instance = $.data( elem, namespace );
       if ( !instance ) {
         logError( namespace + ' not initialized. Cannot call methods, i.e. ' +
           pluginMethodStr );
         return;
       }
 
-      var method = instance[ methodName ];
-      if ( !method || methodName.charAt(0) == '_' ) {
+      let method = instance[ methodName ];
+      if ( !method || methodName.charAt( 0 ) == '_' ) {
         logError( pluginMethodStr + ' is not a valid method' );
         return;
       }
 
       // apply method, get return value
-      var value = method.apply( instance, args );
+      let value = method.apply( instance, args );
       // set return value if value is returned, use only first value
       returnValue = returnValue === undefined ? value : returnValue;
-    });
+    } );
 
     return returnValue !== undefined ? returnValue : $elems;
   }
 
   function plainCall( $elems, options ) {
     $elems.each( function( i, elem ) {
-      var instance = $.data( elem, namespace );
+      let instance = $.data( elem, namespace );
       if ( instance ) {
         // set options & init
         instance.option( options );
@@ -117,27 +108,13 @@ function jQueryBridget( namespace, PluginClass, $ ) {
         instance = new PluginClass( elem, options );
         $.data( elem, namespace, instance );
       }
-    });
+    } );
   }
 
-  updateJQuery( $ );
-
 }
-
-// ----- updateJQuery ----- //
-
-// set $.bridget for v1 backwards compatibility
-function updateJQuery( $ ) {
-  if ( !$ || ( $ && $.bridget ) ) {
-    return;
-  }
-  $.bridget = jQueryBridget;
-}
-
-updateJQuery( jQuery || window.jQuery );
 
 // -----  ----- //
 
 return jQueryBridget;
 
-}));
+} ) );

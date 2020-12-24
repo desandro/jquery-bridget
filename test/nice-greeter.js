@@ -2,11 +2,9 @@
  * NiceGreeter test plugin
  */
 
-/* jshint browser: true, undef: true, unused: true, devel: true, jquery: true */
+/* globals jQuery */
 
 ( function( window, $ ) {
-
-'use strict';
 
 function NiceGreeter( element, options ) {
   this.element = $( element );
@@ -19,7 +17,7 @@ function NiceGreeter( element, options ) {
 NiceGreeter.prototype.options = {
   greeting: 'hello',
   recipient: 'world',
-  loudGreeting: 'HEY'
+  loudGreeting: 'HEY',
 };
 
 NiceGreeter.prototype._create = function() {
@@ -44,7 +42,7 @@ NiceGreeter.prototype.sayHi = function( recipient ) {
 };
 
 NiceGreeter.prototype.shout = function( recipient ) {
-  var greeting = this.options.loudGreeting.toUpperCase();
+  let greeting = this.options.loudGreeting.toUpperCase();
   recipient = ( recipient || this.options.recipient ).toUpperCase();
   this.element.text( greeting + ' ' + recipient );
   this.shoutCount++;
@@ -63,4 +61,4 @@ NiceGreeter.prototype.getMessage = function() {
 
 window.NiceGreeter = NiceGreeter;
 
-})( window, jQuery );
+} )( window, jQuery );

@@ -6,12 +6,37 @@
   "dependencies": {
     "jquery": ">=1.4.2 <4"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^7.16.0",
+    "eslint-plugin-metafizzy": "^1.1.2",
+    "qunit": "^2.13.0"
+  },
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "npx eslint .",
+    "test": "npm test && echo \"View test/ in browser\""
+  },
+  "eslintConfig": {
+    "plugins": [
+      "metafizzy"
+    ],
+    "extends": "plugin:metafizzy/base",
+    "parserOptions": {
+      "ecmaVersion": 2018
+    },
+    "env": {
+      "browser": true,
+      "commonjs": true
+    },
+    "rules": {
+      "id-length": [ "error", {
+        "min": 2,
+        "max": 30,
+        "exceptions": [ "x", "y", "i", "$" ]
+      } ]
+    }
   },
   "repository": {
     "type": "git",

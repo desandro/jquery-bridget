@@ -41,8 +41,6 @@ Bridget can make this constructor work as a jQuery plugin. The `namespace` is th
 jQueryBridget( 'niceGreeter', NiceGreeter );
 // optional: pass in jQuery variable
 jQueryBridget( 'niceGreeter', NiceGreeter, jQuery );
-// or: use $.bridget
-$.bridget( 'niceGreeter', NiceGreeter );
 
 // now the constructor can be used as a jQuery plugin
 var $elem = $('#elem');
