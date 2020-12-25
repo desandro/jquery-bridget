@@ -8,7 +8,7 @@
   },
   "devDependencies": {
     "eslint": "^7.16.0",
-    "eslint-plugin-metafizzy": "^1.1.2",
+    "eslint-plugin-metafizzy": "^1.2.1",
     "qunit": "^2.13.0"
   },
   "directories": {
@@ -16,7 +16,7 @@
   },
   "scripts": {
     "lint": "npx eslint .",
-    "test": "npm test && echo \"View test/ in browser\""
+    "test": "npm run lint && echo \"View test/ in browser\""
   },
   "eslintConfig": {
     "plugins": [
@@ -31,11 +31,19 @@
       "commonjs": true
     },
     "rules": {
-      "id-length": [ "error", {
-        "min": 2,
-        "max": 30,
-        "exceptions": [ "x", "y", "i", "$" ]
-      } ]
+      "id-length": [
+        "error",
+        {
+          "min": 2,
+          "max": 30,
+          "exceptions": [
+            "x",
+            "y",
+            "i",
+            "$"
+          ]
+        }
+      ]
     }
   },
   "repository": {

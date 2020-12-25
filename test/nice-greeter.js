@@ -38,7 +38,7 @@ NiceGreeter.prototype.sayHi = function( recipient ) {
   recipient = recipient || this.options.recipient;
   this.element.text( this.options.greeting + ' ' + recipient );
   this.helloCount++;
-  console.log( 'Said ' + this.options.greeting + ' ' + this.helloCount + ' times' );
+  console.log(`Said ${this.options.greeting} ${this.helloCount} times`);
 };
 
 NiceGreeter.prototype.shout = function( recipient ) {
@@ -46,7 +46,7 @@ NiceGreeter.prototype.shout = function( recipient ) {
   recipient = ( recipient || this.options.recipient ).toUpperCase();
   this.element.text( greeting + ' ' + recipient );
   this.shoutCount++;
-  console.log( 'Shouted ' + greeting + ' ' + this.shoutCount + ' times' );
+  console.log(`Shouted ${greeting} ${this.shoutCount} times`);
 };
 
 // private method

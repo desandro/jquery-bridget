@@ -24,8 +24,6 @@
 
 // ----- utils ----- //
 
-let arraySlice = Array.prototype.slice;
-
 // helper function for logging errors
 // $.error breaks jQuery chaining
 let console = window.console;
@@ -46,20 +44,16 @@ function jQueryBridget( namespace, PluginClass, $ ) {
   if ( !PluginClass.prototype.option ) {
     // option setter
     PluginClass.prototype.option = function( opts ) {
-      // bail out if not an object
-      if ( !$.isPlainObject( opts ) ) {
-        return;
-      }
-      this.options = $.extend( true, this.options, opts );
+      if ( !opts ) return;
+      if ( !this.options ) this.options = {};
+      this.options = Object.assign( this.options, opts );
     };
   }
 
   // make jQuery plugin
-  $.fn[ namespace ] = function( arg0 /* , arg1 */ ) {
+  $.fn[ namespace ] = function( arg0, ...args ) {
     if ( typeof arg0 == 'string' ) {
       // method call $().plugin( 'methodName', { options } )
-      // shift arguments by 1
-      let args = arraySlice.call( arguments, 1 );
       return methodCall( this, arg0, args );
     }
     // just $().plugin({ options })
@@ -70,20 +64,20 @@ function jQueryBridget( namespace, PluginClass, $ ) {
   // $().plugin('methodName')
   function methodCall( $elems, methodName, args ) {
     let returnValue;
-    let pluginMethodStr = '$().' + namespace + '("' + methodName + '")';
+    let pluginMethodStr = `$().${namespace}("${methodName}")`;
 
     $elems.each( function( i, elem ) {
       // get instance
       let instance = $.data( elem, namespace );
       if ( !instance ) {
-        logError( namespace + ' not initialized. Cannot call methods, i.e. ' +
-          pluginMethodStr );
+        logError( `${namespace} not initialized.` +
+          ` Cannot call method ${pluginMethodStr}` );
         return;
       }
 
       let method = instance[ methodName ];
       if ( !method || methodName.charAt( 0 ) == '_' ) {
-        logError( pluginMethodStr + ' is not a valid method' );
+        logError(`${pluginMethodStr} is not a valid method`);
         return;
       }
 
