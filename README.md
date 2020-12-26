@@ -2,7 +2,7 @@
 
 Bridget makes a jQuery plugin out of a constructor :factory:
 
-It's based off of the [jQuery UI widget factory](http://jqueryui.com/widget/). You should probably use that, since it's very good. I use this, since it's a bit simpler. Used for [Masonry](http://masonry.desandro.com), [Isotope](http://isotope.metafizzy.co), [Packery](http://packery.metafizzy.co), [Flickity](http://flickity.metafizzy.co), and [Draggabilly](http://draggabilly.desandro.com).
+It's based off of the [jQuery UI widget factory](https://jqueryui.com/widget/). Used for [Masonry](https://masonry.desandro.com), [Isotope](https://isotope.metafizzy.co), [Packery](https://packery.metafizzy.co), [Flickity](https://flickity.metafizzy.co), [Infinite Scroll](https://infinite-scroll.com), and [Draggabilly](https://draggabilly.desandro.com).
 
 ## Plugin constructor
 
@@ -68,4 +68,4 @@ Install with Yarn `yarn add jquery-bridget`
 
 ## MIT license
 
-Bridget is released under the [MIT license](http://desandro.mit-license.org).
+Bridget is released under the [MIT license](https://desandro.mit-license.org).

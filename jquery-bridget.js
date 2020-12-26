@@ -1,6 +1,6 @@
 /**
  * Bridget makes jQuery widgets
- * v2.0.1
+ * v3.0.0
  * MIT license
  */
 
