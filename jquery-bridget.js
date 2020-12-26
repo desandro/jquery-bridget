@@ -45,8 +45,8 @@ function jQueryBridget( namespace, PluginClass, $ ) {
     // option setter
     PluginClass.prototype.option = function( opts ) {
       if ( !opts ) return;
-      if ( !this.options ) this.options = {};
-      this.options = Object.assign( this.options, opts );
+
+      this.options = Object.assign( this.options || {}, opts );
     };
   }
 

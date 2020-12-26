@@ -5,15 +5,12 @@
   "dependencies": {
     "jquery": ">=1.4.2 <4"
   },
-  "devDependencies": {
-    "qunit": "^2.0.0"
-  },
+  "devDependencies": {},
   "homepage": "https://github.com/desandro/jquery-bridget",
   "authors": [
     "David DeSandro <desandrocodes@gmail.com>"
   ],
   "moduleType": [
-    "amd",
     "globals",
     "node"
   ],

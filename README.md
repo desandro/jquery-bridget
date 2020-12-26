@@ -62,9 +62,9 @@ Getter methods can still be used. For jQuery objects with multiple elements, get
 
 ## Package managers
 
-Install with [Bower :bird:](http://bower.io): `bower install jquery-bridget`
-
 Install with npm `npm install jquery-bridget`
+
+Install with Yarn `yarn add jquery-bridget`
 
 ## MIT license
 
